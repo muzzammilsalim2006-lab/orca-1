@@ -1,0 +1,36 @@
+{
+  "marine": {
+    "wave_height_m": 1.6,
+    "wave_period_s": null,
+    "swell_height_m": null,
+    "swell_period_s": null,
+    "sea_surface_temperature_c": 28.0,
+    "ocean_current_velocity_ms": null,
+    "ocean_current_direction_deg": null,
+    "source": "Open-Meteo Marine (Degraded Fallback)",
+    "mode": "degraded_cached"
+  },
+  "weather": {
+    "wind_speed_kmh": 22.0,
+    "wind_direction_deg": 180.0,
+    "wind_gusts_kmh": null,
+    "precipitation_probability": 30.0,
+    "precipitation_mm": null,
+    "weather_code": 3,
+    "weather_description": "Overcast",
+    "air_temperature_c": 28.5,
+    "visibility_km": null,
+    "source": "Open-Meteo Weather (Degraded Fallback)",
+    "mode": "degraded_cached"
+  },
+  "warning": {
+    "status": "NO_WARNING",
+    "severity": "NONE",
+    "region": "Kerala Coast",
+    "warning_type": null,
+    "message": "Warning bulletin unavailable or pending update; proceed with standard nautical vigilance.",
+    "valid_until": "2026-09-09T12:00:00Z",
+    "source": "IMD",
+    "mode": "degraded_cached"
+  }
+}

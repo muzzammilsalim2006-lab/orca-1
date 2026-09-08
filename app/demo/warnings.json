@@ -1,0 +1,31 @@
+{
+  "source": {
+    "provider": "IMD bulletin (demo static)",
+    "data_status": "demo",
+    "note": "Prototype stand-in for parsed IMD bulletins."
+  },
+  "warnings": [
+    {
+      "id": "bay-cyclone-watch",
+      "type": "cyclone",
+      "severity": "watch",
+      "headline": "Cyclonic circulation over southwest Bay of Bengal; fishermen advised caution near Tamil Nadu coast",
+      "issued_by": "IMD",
+      "radius_km": 450,
+      "center_latitude": 12.5,
+      "center_longitude": 84.5,
+      "valid_until": "2030-01-01T00:00:00Z"
+    },
+    {
+      "id": "kerala-squally-weather",
+      "type": "marine",
+      "severity": "warning",
+      "headline": "Squally weather with wind speeds reaching 45-55 kmph along Kerala coast; fishermen advised not to venture into sea",
+      "issued_by": "IMD",
+      "radius_km": 300,
+      "center_latitude": 10.0,
+      "center_longitude": 74.5,
+      "valid_until": "2030-01-01T00:00:00Z"
+    }
+  ]
+}
