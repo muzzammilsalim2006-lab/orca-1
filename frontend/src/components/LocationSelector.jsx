@@ -5,8 +5,8 @@ const PRESET_LOCATIONS = [
   { label: 'Chennai Coast', lat: 13.0827, lon: 80.2707, tag: 'Moderate Demo' },
   { label: 'Kochi Port', lat: 9.9312, lon: 76.2673, tag: 'Cyclone Warning Demo' },
   { label: 'Visakhapatnam (Vizag)', lat: 17.6868, lon: 83.2185, tag: 'Bay of Bengal' },
-  { label: 'Mumbai Harbor', lat: 18.9438, lon: 72.8360, tag: 'Arabian Sea' },
-  { label: 'Goa Coast (Panaji)', lat: 15.4989, lon: 73.8278, tag: 'Konkan Coast' },
+  { label: 'Mumbai Harbor', lat: 18.9438, lon: 72.8360, tag: 'Marathi Region' },
+  { label: 'Goa Coast (Panaji)', lat: 15.4989, lon: 73.8278, tag: 'Marathi Region' },
 ];
 
 export default function LocationSelector({
@@ -63,6 +63,11 @@ export default function LocationSelector({
               {preset.tag.includes('Cyclone') && (
                 <span className="bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[10px] px-1.5 py-0.5 rounded-md font-semibold">
                   Cyclone Alert
+                </span>
+              )}
+              {preset.tag.includes('Marathi') && (
+                <span className="bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[10px] px-1.5 py-0.5 rounded-md font-semibold">
+                  मराठी
                 </span>
               )}
             </button>

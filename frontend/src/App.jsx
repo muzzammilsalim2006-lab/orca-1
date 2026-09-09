@@ -10,6 +10,7 @@ import AIExplanationCard from './components/AIExplanationCard';
 import WarningsBanner from './components/WarningsBanner';
 import Footer from './components/Footer';
 import { assessRisk, fetchHealth } from './services/api';
+import { detectRegionalLanguage } from './utils/regionDetector';
 import { AlertCircle, RefreshCw, Info, WifiOff } from 'lucide-react';
 
 export default function App() {
@@ -21,6 +22,9 @@ export default function App() {
   const [assessment, setAssessment] = useState(null);
   const [error, setError] = useState(null);
   const [isConnected, setIsConnected] = useState(true);
+  
+  // Language selection state: 'auto' | 'en' | 'mr'
+  const [languageMode, setLanguageMode] = useState('auto');
 
   // Check health on mount
   useEffect(() => {
@@ -31,10 +35,10 @@ export default function App() {
 
   // Run initial assessment on mount
   useEffect(() => {
-    handleAssess(lat, lon, label);
+    handleAssess(lat, lon, label, languageMode);
   }, []);
 
-  const handleAssess = async (targetLat, targetLon, targetLabel) => {
+  const handleAssess = async (targetLat, targetLon, targetLabel, currentLangMode = languageMode) => {
     setLoading(true);
     setError(null);
     try {
@@ -44,6 +48,7 @@ export default function App() {
         label: targetLabel,
         demo: demoMode ? true : false,
         includeExplanation: true,
+        language: currentLangMode,
       });
       setAssessment(data);
       setIsConnected(true);
@@ -55,12 +60,26 @@ export default function App() {
     }
   };
 
+  const handleLanguageChange = (newMode) => {
+    setLanguageMode(newMode);
+    if (assessment) {
+      handleAssess(lat, lon, label, newMode);
+    }
+  };
+
   const handleMapLocationSelect = (selectedLat, selectedLon) => {
     setLat(selectedLat);
     setLon(selectedLon);
-    setLabel(`Selected Location (${selectedLat}, ${selectedLon})`);
-    handleAssess(selectedLat, selectedLon, `Selected Location (${selectedLat}, ${selectedLon})`);
+    const newLabel = `Selected Location (${selectedLat}, ${selectedLon})`;
+    setLabel(newLabel);
+    handleAssess(selectedLat, selectedLon, newLabel, languageMode);
   };
+
+  // Compute active language display helper
+  const activeLanguage =
+    languageMode === 'auto'
+      ? detectRegionalLanguage(lat, lon, label)
+      : languageMode;
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
@@ -96,7 +115,7 @@ export default function App() {
           setLon={setLon}
           label={label}
           setLabel={setLabel}
-          onAssess={(a, b, c) => handleAssess(a, b, c)}
+          onAssess={(a, b, c) => handleAssess(a, b, c, languageMode)}
           loading={loading}
           demoMode={demoMode}
           setDemoMode={setDemoMode}
@@ -113,7 +132,7 @@ export default function App() {
               </div>
             </div>
             <button
-              onClick={() => handleAssess(lat, lon, label)}
+              onClick={() => handleAssess(lat, lon, label, languageMode)}
               className="bg-rose-900/50 hover:bg-rose-900 border border-rose-500/40 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors"
             >
               <RefreshCw className="w-3.5 h-3.5" />
@@ -161,9 +180,14 @@ export default function App() {
               <RiskFactorsTable factors={assessment.risk.factors} />
             )}
 
-            {/* Guardrailed AI Summary Card */}
+            {/* Guardrailed AI Summary Card with Marathi Support */}
             {assessment.explanation && (
-              <AIExplanationCard explanation={assessment.explanation} />
+              <AIExplanationCard
+                explanation={assessment.explanation}
+                languageMode={languageMode}
+                activeLanguage={activeLanguage}
+                onLanguageChange={handleLanguageChange}
+              />
             )}
 
           </div>

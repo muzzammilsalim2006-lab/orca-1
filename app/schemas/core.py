@@ -84,6 +84,7 @@ class Explanation(BaseModel):
     text: str
     provider: str
     generated_at: datetime
+    language: str = "en"
     guardrail: str = (
         "Advisory only. This text cannot change the risk score, level, recommendation, or official warnings."
     )
@@ -93,6 +94,10 @@ class AssessRequest(BaseModel):
     latitude: float = Field(..., ge=-90, le=90, description="Decimal degrees north")
     longitude: float = Field(..., ge=-180, le=180, description="Decimal degrees east")
     label: str | None = None
+    language: str = Field(
+        default="auto",
+        description="Target explanation language code: 'auto', 'en', or 'mr'",
+    )
     include_explanation: bool = True
     demo: bool | None = Field(
         default=None,

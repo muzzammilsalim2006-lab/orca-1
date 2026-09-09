@@ -38,13 +38,14 @@ export async function fetchDemoLocations() {
   }
 }
 
-export async function assessRisk({ latitude, longitude, label, demo = null, includeExplanation = true }) {
+export async function assessRisk({ latitude, longitude, label, demo = null, includeExplanation = true, language = 'auto' }) {
   try {
     const payload = {
       latitude: parseFloat(latitude),
       longitude: parseFloat(longitude),
       label: label || undefined,
       include_explanation: includeExplanation,
+      language: language,
     };
 
     if (demo !== null) {

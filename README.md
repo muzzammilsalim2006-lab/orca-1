@@ -213,6 +213,26 @@ python -m pytest tests/test_assess.py tests/test_risk_engine.py
 
 ---
 
+## Regional Language Support (Marathi `mr`)
+
+ORCA includes automatic regional language detection and manual language controls for coastal advisories:
+
+- **Supported Languages**: English (`en`), Marathi (`mr`, Devanagari script `मराठी`).
+- **Automatic Regional Language Behavior**:
+  - When the selected location is in **Mumbai** (18.70°N–19.40°N, 72.70°E–73.15°E) or **Goa** (14.80°N–15.80°N, 73.60°E–74.30°E), the AI summary automatically defaults to **Marathi (`mr`)**.
+  - Locations outside these coastal bounding boxes (e.g. Chennai, Kochi, Visakhapatnam) retain **English (`en`)** by default.
+- **Manual Language Override**:
+  - Users can manually switch between **Automatic**, **English**, and **मराठी (Marathi)** via the UI language selector.
+  - Manual overrides take immediate effect while preserving all underlying risk scores and official warning bulletins.
+- **Region Detection Authority**:
+  - Latitude and longitude coordinates take primary precedence via bounding box validation (`detectRegionalLanguage(lat, lon, label)`). Location name keywords serve as a fallback.
+- **Testing Regional Language Support Locally**:
+  ```bash
+  python -m pytest tests/test_marathi_regional.py
+  ```
+
+---
+
 ## Known Limitations & Future Scope
 
 ### Known Limitations

@@ -10,9 +10,18 @@ from app.schemas import (AssessRequest, AssessResponse, Location, OceanData,
                          WeatherData, WeatherWarning)
 from app.services import demo_data, imd as imd_service, llm, ocean as ocean_service
 from app.services import warnings as warnings_service
+from app.utils.geo import detect_regional_language
 from app.utils.logging import get_logger
 
 log = get_logger("orca.pipeline")
+
+
+def _resolve_language(request: AssessRequest) -> str:
+    req_lang = getattr(request, "language", "auto") or "auto"
+    if req_lang in ["mr", "en"]:
+        return req_lang
+    # If auto, resolve regional language based on coordinates & location label
+    return detect_regional_language(request.latitude, request.longitude, request.label)
 
 
 async def run_assessment(client, request: AssessRequest, settings: Settings,
@@ -66,7 +75,8 @@ async def run_assessment(client, request: AssessRequest, settings: Settings,
         explanation=None,
     )
     if request.include_explanation:
-        response.explanation = await llm.build_explanation(client, response, settings)
+        target_lang = _resolve_language(request)
+        response.explanation = await llm.build_explanation(client, response, settings, language=target_lang)
     return response
 
 
@@ -93,5 +103,6 @@ async def _demo_response(client, request: AssessRequest, settings: Settings,
         explanation=None,
     )
     if request.include_explanation:
-        response.explanation = await llm.build_explanation(client, response, settings)
+        target_lang = _resolve_language(request)
+        response.explanation = await llm.build_explanation(client, response, settings, language=target_lang)
     return response
