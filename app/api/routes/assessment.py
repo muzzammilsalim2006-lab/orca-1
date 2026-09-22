@@ -22,7 +22,7 @@ from app.schemas.weather import WeatherConditions
 from app.schemas.warning import CoastalWarning
 from app.utils.logging import log_event
 
-router = APIRouter(prefix="/api/assess", tags=["Assessment"])
+router = APIRouter(prefix="/api/v1/assess", tags=["Assessment"])
 
 
 @router.post("", response_model=AssessmentResponse)

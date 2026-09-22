@@ -33,6 +33,14 @@ class Settings(BaseSettings):
     imd_api_base_url: str | None = None    # set when M2 finalises IMD access
     imd_api_key: str | None = None
 
+    @property
+    def open_meteo_marine_url(self) -> str:
+        return self.open_meteo_marine_base_url
+
+    @property
+    def open_meteo_weather_url(self) -> str:
+        return self.open_meteo_base_url
+
     # Optional guardrailed LLM explanation layer
     llm_api_key: str | None = None
     llm_base_url: str = "https://api.openai.com/v1"

@@ -11,3 +11,8 @@ def configure_logging(level: str = "INFO") -> None:
 
 def get_logger(name: str) -> logging.Logger:
     return logging.getLogger(name)
+
+
+def log_event(event_name: str, payload: dict | None = None) -> None:
+    logger = get_logger("orca.event")
+    logger.info("EVENT: %s | DATA: %s", event_name, payload or {})

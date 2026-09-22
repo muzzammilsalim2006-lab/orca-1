@@ -88,10 +88,13 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
+    from app.api.routes.locations import router as locations_router
+
     register_exception_handlers(app)
     app.include_router(health.router)
     app.include_router(assess.router)
     app.include_router(meta.router)
+    app.include_router(locations_router)
     return app
 
 

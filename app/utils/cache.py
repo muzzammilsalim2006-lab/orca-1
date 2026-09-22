@@ -28,6 +28,10 @@ class TTLCache:
         with self._lock:
             self._data[key] = (value, time.monotonic() + ttl_seconds)
 
+    def clear(self) -> None:
+        with self._lock:
+            self._data.clear()
+
     def stats(self) -> dict:
         with self._lock:
             return {"entries": len(self._data), "hits": self.hits, "misses": self.misses}

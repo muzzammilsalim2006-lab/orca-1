@@ -8,6 +8,8 @@ from app.services.imd import weather_cache
 from app.services.ocean import ocean_cache
 from app.services.warnings import warnings_cache
 
+from datetime import datetime, timezone
+
 router = APIRouter(tags=["health"])
 
 
@@ -26,4 +28,5 @@ def health(request: Request):
         demo_mode=settings.demo_mode,
         cache={"weather": weather_cache.stats(), "ocean": ocean_cache.stats(),
                "warnings": warnings_cache.stats()},
+        timestamp=datetime.now(timezone.utc),
     )

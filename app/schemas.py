@@ -3,7 +3,10 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-DataStatus = Literal["live", "cached", "fallback", "demo", "unavailable"]
+DataStatus = Literal[
+    "live", "cached", "fallback", "demo", "unavailable",
+    "LIVE", "CACHED", "FALLBACK", "DEMO", "UNAVAILABLE"
+]
 RiskLevel = Literal["LOW", "MODERATE", "HIGH"]
 
 
@@ -12,6 +15,7 @@ class DataSource(BaseModel):
     source_url: str | None = None
     retrieved_at: datetime
     data_status: DataStatus
+    forecast_time: datetime | None = None
     note: str | None = None
 
 
@@ -124,6 +128,7 @@ class HealthResponse(BaseModel):
     uptime_seconds: float
     demo_mode: bool
     cache: dict
+    timestamp: datetime = Field(default_factory=datetime.utcnow)
 
 
 class DemoLocation(BaseModel):

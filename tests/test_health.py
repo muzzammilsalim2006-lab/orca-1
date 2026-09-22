@@ -19,5 +19,5 @@ def test_locations_endpoint():
     data = response.json()
     assert data["count"] >= 5
     names = [loc["name"] for loc in data["locations"]]
-    assert "Kochi" in names
-    assert "Mumbai" in names
+    assert any("Mumbai" in name for name in names)
+    assert any("Malvan" in name or "Panaji" in name for name in names)

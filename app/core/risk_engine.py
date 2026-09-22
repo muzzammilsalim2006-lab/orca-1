@@ -19,12 +19,12 @@ MISSING_PENALTY_MAX = 12.0
 CATEGORY_FLOOR = 45.0
 
 RECOMMENDATIONS = {
-    "LOW": "Conditions appear generally favourable. Stay alert to weather changes and official bulletins.",
-    "MODERATE": "Exercise caution near the coast. Inexperienced swimmers should stay out of the water; conditions can change quickly.",
-    "HIGH": "Avoid beach, fishing, and boating activity. Sea state and/or weather are dangerous.",
+    "LOW": "Risk assessment based on available forecast data. Conditions appear generally manageable for coastal craft, but stay alert to weather changes and official bulletins.",
+    "MODERATE": "Risk assessment based on available forecast data. Exercise caution near the coast; small fishing craft should avoid offshore waters as sea state can change rapidly.",
+    "HIGH": "High risk advisory based on forecast data. All fishing vessels and small craft should suspend sea operations.",
 }
-WARNING_RECOMMENDATION = ("An official warning is in effect. Cancel water activities and follow "
-                          "IMD/NDMA instructions immediately.")
+WARNING_RECOMMENDATION = ("An official IMD/NDMA warning is in effect. Cancel water/fishing activities and follow "
+                          "official instructions immediately.")
 
 
 def _ramp(value: float | None, low: float, high: float) -> float | None:

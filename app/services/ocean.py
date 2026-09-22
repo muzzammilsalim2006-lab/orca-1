@@ -1,43 +1,45 @@
+import httpx
+from datetime import datetime, timezone
+from typing import Optional
+
 from app.config import Settings
-from app.core.normalizer import normalize_open_meteo_marine
 from app.schemas import OceanData
-from app.utils.cache import TTLCache
+from app.services import demo_data
+from app.services.openmeteo_service import get_openmeteo_ocean, openmeteo_ocean_cache
 from app.utils.errors import UpstreamError
-from app.utils.logging import get_logger
+from app.utils.logging import get_logger, log_event
 
 log = get_logger("orca.services.ocean")
-ocean_cache = TTLCache()
-
-MARINE_CURRENT_FIELDS = (
-    "wave_height,wave_period,wave_direction,wind_wave_height,"
-    "swell_wave_height,swell_wave_period,swell_wave_direction,"
-    "sea_surface_temperature,ocean_current_velocity"
-)
+ocean_cache = openmeteo_ocean_cache
 
 
-async def get_ocean(client, latitude: float, longitude: float, settings: Settings) -> OceanData:
-    """Raises UpstreamError when no marine grid data exists (inland); pipeline converts to null."""
-    key = f"ocean:{latitude:.2f}:{longitude:.2f}"
-    cached = ocean_cache.get(key)
-    if cached is not None:
-        return cached.model_copy(update={
-            "source": cached.source.model_copy(update={"data_status": "cached"})})
-
-    response = await client.get(
-        settings.open_meteo_marine_base_url,
-        params={"latitude": latitude, "longitude": longitude,
-                "current": MARINE_CURRENT_FIELDS, "timezone": "UTC"},
-    )
-    if response.status_code != 200:
-        raise UpstreamError(f"Marine provider error: {_reason(response)}")
-
-    data = normalize_open_meteo_marine(response.json(), source_url=settings.open_meteo_marine_base_url)
-    ocean_cache.set(key, data, settings.cache_ttl_ocean_seconds)
-    return data
-
-
-def _reason(response) -> str:
+async def get_ocean(
+    client: Optional[httpx.AsyncClient],
+    latitude: float,
+    longitude: float,
+    settings: Settings,
+    forecast_time: Optional[datetime] = None,
+) -> Optional[OceanData]:
+    """
+    Primary Ocean Data service.
+    Attempts live Open-Meteo Marine fetch.
+    If live API fails or location is inland, falls back to saved demo snapshot if enabled.
+    Missing values remain None and are never converted to zero.
+    """
     try:
-        return str(response.json().get("reason", response.status_code))
-    except Exception:
-        return f"HTTP {response.status_code}"
+        data = await get_openmeteo_ocean(client, latitude, longitude, settings, forecast_time)
+        return data
+    except Exception as exc:
+        log.warning("Live ocean fetch failed for (%.4f, %.4f): %s", latitude, longitude, exc)
+        if settings.demo_fallback:
+            fallback = demo_data.demo_ocean_fallback(latitude, longitude)
+            if fallback is not None:
+                log_event("OCEAN_DEMO_FALLBACK_USED", {
+                    "latitude": latitude,
+                    "longitude": longitude,
+                    "reason": str(exc),
+                })
+                fallback.source.data_status = "demo"
+                fallback.source.note = f"Demo snapshot fallback used (live API unavailable: {exc})"
+                return fallback
+        return None

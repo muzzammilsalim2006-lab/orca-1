@@ -41,10 +41,57 @@ Life safety decisions **cannot** depend on generative LLM outputs, which can hal
 ## Key Features
 
 - **Interactive Coastal Map**: Leaflet map for pinpointing coastal locations across the Indian peninsula.
-- **Real-Time Data & Offline Demo Mode**: Works with live Open-Meteo marine data or 100% offline using saved demo profiles (Chennai, Kochi Cyclone Alert, Vizag, Mumbai, Goa).
+- **Live Open-Meteo Marine Data**: Real-time ocean wave heights, wave periods, swell dynamics, sea surface temperature, and ocean current speeds directly from Open-Meteo Marine API.
+- **Offline Demo Mode & Fallback**: Automatic fallback to saved demo profiles when external API is unreachable or demo mode is active.
 - **Official Warning Bulletins**: Automatic highlight of IMD marine/cyclone warning alerts.
 - **Null Data Integrity**: Missing measurements remain `null` and are penalized by the engine—never assumed to be zero.
 - **Mobile-Responsive UI**: Dark glassmorphic interface tailored for field use.
+
+---
+
+## Live Open-Meteo Marine API Integration
+
+ORCA integrates live ocean state modeling through `app/services/openmeteo_service.py` connected to the Open-Meteo Marine API:
+
+### 1. Variables Retrieved
+- **Wave Parameters**: Significant wave height (`wave_height_m`), peak period (`wave_period_s`), direction (`wave_direction_deg`).
+- **Swell Dynamics**: Swell wave height (`swell_height_m`), period (`swell_period_s`), direction (`swell_direction_deg`).
+- **Wind Waves**: Wind wave height (`wind_wave_height_m`).
+- **Ocean Currents & Water**: Surface current velocity (`ocean_current_speed_kmph`), current direction (`ocean_current_direction_deg`), sea surface temperature (`sea_surface_temperature_c`).
+
+### 2. Data Provenance & Status Tags (`data_status`)
+- `live`: Direct real-time API response from Open-Meteo Marine servers.
+- `cached`: In-memory TTL cached response (`cache_ttl_ocean_seconds`).
+- `demo`: Saved offline profile fallback used when API is unavailable or demo mode is forced.
+- `unavailable`: Data missing for non-marine coordinates.
+
+### 3. Fallback Architecture
+```
+User Assessment Request
+        │
+        ▼
+   [Demo Mode?] ──Yes──► Saved Demo Profile
+        │
+       No
+        ▼
+   Live Open-Meteo Marine API Call
+        │
+   ┌────┴──────────────────────────┐
+   ▼                               ▼
+Success                         Failure (Timeout / Network / Error)
+   │                               │
+   ▼                               ▼
+Live Ocean Data           Demo Snapshot Fallback (data_status="demo")
+   │                               │
+   └───────────────┬───────────────┘
+                   │
+                   ▼
+     Deterministic Risk Engine
+```
+
+### 4. Integrity & Safety Rules
+- **No Zero-Filling**: Inland points or missing sensors remain `null`/`None`. Missing inputs add an explicit risk penalty rather than assuming 0 wave/wind height.
+- **Advisory Disclaimer**: Systems outputs explicitly state: *"Risk assessment based on available forecast data."* Conditions are never declared guaranteed "safe".
 
 ---
 

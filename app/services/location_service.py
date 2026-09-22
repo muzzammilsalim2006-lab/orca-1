@@ -4,69 +4,77 @@ from typing import Any, Dict, List, Optional
 from app.engines.routing import RoutingEngine
 
 INDIAN_COASTAL_PORTS: Dict[str, Dict[str, Any]] = {
-    "Kochi": {
-        "name": "Kochi",
-        "state": "Kerala",
-        "latitude": 9.9312,
-        "longitude": 76.2673,
-        "coastal_region": "Kerala Coast",
-        "landing_centers": ["Munambam", "Thoppumpady", "Kalamukku"],
-    },
     "Mumbai": {
-        "name": "Mumbai",
+        "name": "Mumbai Harbor",
+        "district": "Mumbai",
         "state": "Maharashtra",
         "latitude": 18.9220,
         "longitude": 72.8347,
         "coastal_region": "North Maharashtra Coast",
-        "landing_centers": ["Sassoon Dock", "Bhaucha Dhakka", "Versova"],
+        "landing_centers": ["Sassoon Dock", "Bhaucha Dhakka", "Versova", "Worli Koliwada"],
     },
-    "Chennai": {
-        "name": "Chennai",
-        "state": "Tamil Nadu",
-        "latitude": 13.0827,
-        "longitude": 80.2707,
-        "coastal_region": "North Tamil Nadu Coast",
-        "landing_centers": ["Kasimedu", "Royapuram", "Pattinapakkam"],
+    "Palghar": {
+        "name": "Satpati (Palghar)",
+        "district": "Palghar",
+        "state": "Maharashtra",
+        "latitude": 19.6967,
+        "longitude": 72.7011,
+        "coastal_region": "North Maharashtra Coast",
+        "landing_centers": ["Satpati Jetty", "Dahanu", "Vasai Koliwada"],
     },
-    "Visakhapatnam": {
-        "name": "Visakhapatnam",
-        "state": "Andhra Pradesh",
-        "latitude": 17.6868,
-        "longitude": 83.2185,
-        "coastal_region": "North Andhra Coast",
-        "landing_centers": ["Vizag Fishing Harbour", "Bheemunipatnam"],
+    "Thane": {
+        "name": "Uttan (Thane Coast)",
+        "district": "Thane",
+        "state": "Maharashtra",
+        "latitude": 19.2812,
+        "longitude": 72.7842,
+        "coastal_region": "North Maharashtra Coast",
+        "landing_centers": ["Uttan Bhati", "Pali Jetty", "Gorai"],
     },
-    "Puri": {
-        "name": "Puri",
-        "state": "Odisha",
-        "latitude": 19.8135,
-        "longitude": 85.8312,
-        "coastal_region": "North Odisha Coast",
-        "landing_centers": ["Puri Beach", "Astaranga", "Chandrabhaga"],
+    "Raigad": {
+        "name": "Alibaug (Raigad)",
+        "district": "Raigad",
+        "state": "Maharashtra",
+        "latitude": 18.6414,
+        "longitude": 72.8722,
+        "coastal_region": "South Maharashtra Coast",
+        "landing_centers": ["Alibaug Jetty", "Murud Janjira", "Shrivardhan"],
     },
-    "Mangalore": {
-        "name": "Mangalore",
-        "state": "Karnataka",
-        "latitude": 12.9141,
-        "longitude": 74.8560,
-        "coastal_region": "Karnataka Coast",
-        "landing_centers": ["Old Port (Dakke)", "Kulai"],
+    "Ratnagiri": {
+        "name": "Mirkarwada (Ratnagiri)",
+        "district": "Ratnagiri",
+        "state": "Maharashtra",
+        "latitude": 16.9902,
+        "longitude": 73.2878,
+        "coastal_region": "South Maharashtra Coast",
+        "landing_centers": ["Mirkarwada Fishing Harbour", "Dabhol", "Jaigad"],
     },
-    "Veraval": {
-        "name": "Veraval",
-        "state": "Gujarat",
-        "latitude": 20.9077,
-        "longitude": 70.3678,
-        "coastal_region": "South Gujarat Coast",
-        "landing_centers": ["Veraval Harbour", "Mangrol"],
+    "Sindhudurg": {
+        "name": "Malvan (Sindhudurg)",
+        "district": "Sindhudurg",
+        "state": "Maharashtra",
+        "latitude": 16.0617,
+        "longitude": 73.4686,
+        "coastal_region": "South Maharashtra Coast",
+        "landing_centers": ["Malvan Jetty", "Vengurla Harbour", "Devgad Jetty"],
     },
-    "Goa": {
-        "name": "Panaji (Goa)",
+    "Panaji": {
+        "name": "Panaji (North Goa)",
+        "district": "North Goa",
         "state": "Goa",
         "latitude": 15.4909,
         "longitude": 73.8278,
         "coastal_region": "Goa Coast",
-        "landing_centers": ["Malim Jetty", "Cutbona Jetty"],
+        "landing_centers": ["Malim Jetty", "Mandovi River Mouth", "Chapora Jetty"],
+    },
+    "Mormugao": {
+        "name": "Cutbona (South Goa)",
+        "district": "South Goa",
+        "state": "Goa",
+        "latitude": 15.1633,
+        "longitude": 73.9650,
+        "coastal_region": "Goa Coast",
+        "landing_centers": ["Cutbona Jetty", "Betul Jetty", "Vasco Harbour"],
     },
 }
 
@@ -90,7 +98,7 @@ class LocationService:
                     return port["coastal_region"]
 
         # If not matched by name, find nearest registered port
-        nearest_region = "Kerala Coast"
+        nearest_region = "North Maharashtra Coast"
         min_dist = float("inf")
 
         for port in INDIAN_COASTAL_PORTS.values():
