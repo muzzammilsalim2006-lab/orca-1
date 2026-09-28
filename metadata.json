@@ -1,0 +1,6 @@
+{
+  "name": "ORCA Marine Safety & Coastal Advisory",
+  "description": "Marine safety and coastal advisory platform combining weather, ocean dynamics, and IMD warnings into risk ratings.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

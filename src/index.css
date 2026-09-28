@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+/* Custom Leaflet Map styling overrides for dark theme */
+.leaflet-container {
+  font-family: inherit;
+  z-index: 10;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+}
