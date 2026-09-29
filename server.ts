@@ -648,7 +648,7 @@ export async function fetchLiveOcean(lat: number, lon: number): Promise<{ data: 
   return { data: ocean, status: 'LIVE' };
 }
 
-function buildTemplateExplanation(response: any, language: 'mr' | 'en'): string {
+function buildTemplateExplanation(response: any, language: 'mr' | 'en' | 'hi'): string {
   const { risk, weather, ocean, location, warnings } = response;
 
   if (language === 'mr') {
@@ -687,6 +687,45 @@ function buildTemplateExplanation(response: any, language: 'mr' | 'en'): string 
       parts.push('टीप: काही सागरी माहिती उपलब्ध नसल्याने हे मूल्यांकन प्रातिनिधिक मानले जावे.');
     }
     parts.push('हा स्वयंचलित सल्ला आहे. हवामान खात्याच्या (IMD) अधिकृत सूचनांचे नेहमी पालन करा.');
+    return parts.join(' ');
+  }
+
+  if (language === 'hi') {
+    const hasCyclone = (warnings || []).some((w: any) => w.type === 'cyclone' || (w.headline || '').toLowerCase().includes('cyclone'));
+    const hasMarine = (warnings || []).some((w: any) => w.type === 'marine' || ['warning', 'alert'].includes(w.severity));
+
+    const parts: string[] = [];
+    if (hasCyclone) {
+      parts.push('समुद्र में जाने से बचने की सलाह दी जाती है। आधिकारिक चक्रवात चेतावनी लागू है।');
+      parts.push('स्थानीय प्रशासन और आधिकारिक मौसम विभाग के निर्देशों का कड़ाई से पालन करें।');
+    } else if (hasMarine) {
+      parts.push('खराब मौसम और गंभीर समुद्री चेतावनी प्रभावी है।');
+      parts.push('समुद्र में जाने से बचें और आधिकारिक समुद्री मौसम बुलेटिन का पालन करें।');
+    } else if (risk.level === 'HIGH') {
+      parts.push('समुद्र में जाने से बचने की सलाह दी जाती है। तेज हवाओं और ऊंची लहरों के कारण जोखिम अधिक है।');
+      parts.push('स्थानीय प्रशासन और मौसम विभाग की आधिकारिक सलाह का पालन करें।');
+    } else if (risk.level === 'MODERATE') {
+      parts.push('समुद्र की स्थिति मध्यम रूप से जोखिम भरी है। हवा की गति और लहरों की ऊंचाई में वृद्धि हुई है।');
+      parts.push('समुद्र में जाने से पहले आधिकारिक चेतावनी की जांच करें और अत्यधिक सावधानी बरतें।');
+    } else {
+      parts.push('समुद्र की स्थिति वर्तमान में अपेक्षाकृत अनुकूल है।');
+      parts.push('फिर भी समुद्र में उतरने से पहले नवीनतम मौसम और आधिकारिक बुलेटिन अवश्य जांचें।');
+    }
+
+    const condDetails: string[] = [];
+    if (weather && weather.wind_speed_kmph !== null) {
+      condDetails.push(`हवा की गति लगभग ${Math.round(weather.wind_speed_kmph)} km/h`);
+    }
+    if (ocean && ocean.wave_height_m !== null) {
+      condDetails.push(`लहरों की ऊंचाई ${ocean.wave_height_m} m`);
+    }
+    if (condDetails.length > 0) {
+      parts.push(`(${condDetails.join(', ')} है।)`);
+    }
+    if (risk.missing_inputs?.length > 0) {
+      parts.push('नोट: कुछ समुद्री डेटा अनुपलब्ध होने के कारण यह मूल्यांकन केवल सांकेतिक माना जाए।');
+    }
+    parts.push('यह स्वचालित सलाह है। भारत मौसम विज्ञान विभाग (IMD) की आधिकारिक सूचनाओं का हमेशा पालन करें।');
     return parts.join(' ');
   }
 
@@ -729,7 +768,7 @@ function getGemini(): GoogleGenAI | null {
   return geminiClient;
 }
 
-async function generateAIExplanation(response: any, targetLang: 'mr' | 'en') {
+async function generateAIExplanation(response: any, targetLang: 'mr' | 'en' | 'hi') {
   const genai = getGemini();
   if (genai) {
     try {
@@ -739,13 +778,15 @@ Selected language: ${targetLang}
 
 STRICT GUARDRAILS:
 1. If the selected language is 'mr', write the complete summary in Marathi using Devanagari script.
-2. Do not invent weather or ocean values.
-3. Do not change the risk level or risk score.
-4. Do not override official warnings or deterministic safety vetoes.
-5. Do not say that conditions are guaranteed safe.
-6. Use simple language suitable for fishermen and coastal users.
-7. Clearly explain the main risk factors, safety vetoes (if active), and the recommended action.
-8. Keep explanation under 100 words.`;
+2. If the selected language is 'hi', write the complete summary in Hindi using Devanagari script.
+3. If the selected language is 'en', write the complete summary in English.
+4. Do not invent weather or ocean values.
+5. Do not change the risk level or risk score.
+6. Do not override official warnings or deterministic safety vetoes.
+7. Do not say that conditions are guaranteed safe.
+8. Use simple language suitable for fishermen and coastal users.
+9. Clearly explain the main risk factors, safety vetoes (if active), and the recommended action.
+10. Keep explanation under 100 words.`;
 
       const compactData = {
         location: response.location,
@@ -1124,8 +1165,8 @@ app.post('/api/assess', async (req, res) => {
     const dataQualityReport = evaluateDataQuality(pipelineData);
     const providerHealthMap = buildProviderHealthSummary(pipelineData.metadata.sources, pipelineData.providers);
 
-    const targetLang: 'mr' | 'en' =
-      language === 'mr' || language === 'en'
+    const targetLang: 'mr' | 'en' | 'hi' =
+      language === 'mr' || language === 'en' || language === 'hi'
         ? language
         : detectRegionalLanguage(lat, lon, label);
 
@@ -1232,6 +1273,58 @@ app.post('/api/assess', async (req, res) => {
         message: error.message || 'Assessment failed',
       },
     });
+  }
+});
+
+/**
+ * High-Quality Server-Side Neural TTS Endpoint
+ * Generates natural human-like female speech using Gemini TTS (Kore voice)
+ * Keeps all API keys securely on the server.
+ */
+app.post('/api/tts', async (req, res) => {
+  try {
+    const { text, language: _lang } = req.body;
+    if (!text || typeof text !== 'string') {
+      return res.status(400).json({ error: 'Text parameter required', fallback: true });
+    }
+
+    const genai = getGemini();
+    if (!genai) {
+      return res.status(503).json({ error: 'Neural TTS client unavailable', fallback: true });
+    }
+
+    // Call Gemini TTS model with female voice Kore (supports English, Hindi, and Marathi)
+    const response = await genai.models.generateContent({
+      model: 'gemini-3.8-flash-lite-tts',
+      contents: text.trim(),
+      config: {
+        responseModalities: ['AUDIO'],
+        speechConfig: {
+          voiceConfig: {
+            prebuiltVoiceConfig: {
+              voiceName: 'Kore',
+            },
+          },
+        },
+      },
+    });
+
+    const audioPart = response.candidates?.[0]?.content?.parts?.[0];
+    const base64Data = audioPart?.inlineData?.data;
+    const mimeType = audioPart?.inlineData?.mimeType || 'audio/wav';
+
+    if (!base64Data) {
+      return res.status(502).json({ error: 'No audio returned from TTS engine', fallback: true });
+    }
+
+    const audioBuffer = Buffer.from(base64Data, 'base64');
+    res.setHeader('Content-Type', mimeType);
+    res.setHeader('Content-Length', audioBuffer.length);
+    res.setHeader('Cache-Control', 'public, max-age=3600');
+    res.send(audioBuffer);
+  } catch (error: any) {
+    console.warn('Neural TTS generation failed:', error.message);
+    res.status(500).json({ error: error.message || 'TTS failure', fallback: true });
   }
 });
 
