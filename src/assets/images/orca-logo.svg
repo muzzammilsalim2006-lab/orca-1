@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
-    <!-- Rich Maritime Gold Gradients -->
+    <!-- Rich Lustrous Maritime Gold Gradients matching uploaded asset -->
     <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#FCEBA0" />
       <stop offset="25%" stop-color="#E5C365" />
-      <stop offset="60%" stop-color="#C59B27" />
+      <stop offset="55%" stop-color="#C59B27" />
       <stop offset="85%" stop-color="#E2C269" />
-      <stop offset="100%" stop-color="#9E7616" />
+      <stop offset="100%" stop-color="#A57D18" />
     </linearGradient>
 
     <linearGradient id="goldLight" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FFF2B8" />
-      <stop offset="50%" stop-color="#E1BF62" />
+      <stop offset="0%" stop-color="#FCEBA0" />
+      <stop offset="40%" stop-color="#DFBD5D" />
       <stop offset="100%" stop-color="#B88A1B" />
     </linearGradient>
 
@@ -24,7 +24,7 @@
     <linearGradient id="goldRopeDark" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#D6A730" />
       <stop offset="60%" stop-color="#A87B14" />
-      <stop offset="100%" stop-color="#735208" />
+      <stop offset="100%" stop-color="#7E5C0A" />
     </linearGradient>
 
     <!-- Curvature paths for upper and lower text -->
@@ -35,12 +35,10 @@
     <path id="pathMotto" d="M 98,242 A 166,166 0 0,0 414,242" fill="none" />
   </defs>
 
-  <rect width="512" height="512" fill="#020202" />
+  
+  
 
-  <!-- Circular Outer Badge Base -->
-  <circle cx="256" cy="256" r="244" fill="#020202" />
-
-  <!-- Outer Gold Rope Ring -->
+  <!-- Outer Gold Rope Ring Border -->
   <circle cx="256" cy="256" r="236" fill="none" stroke="url(#goldGrad)" stroke-width="3" />
   <circle cx="256" cy="256" r="210" fill="none" stroke="url(#goldGrad)" stroke-width="2.5" />
 
@@ -132,55 +130,81 @@
     <polygon points="464.23,228.82 491.95,251.33 491.64,268.97 465.68,244.46" fill="url(#goldRopeDark)" />
   </g>
 
-  <!-- Inner Badge Dark Field -->
-  <circle cx="256" cy="256" r="208" fill="#000000" />
+  <!-- Inner Badge Field -->
+  
 
   <!-- Concentric Inner Gold Hairline Ring -->
   <circle cx="256" cy="256" r="196" fill="none" stroke="url(#goldGrad)" stroke-width="2" />
 
-  <!-- Beaded Dots Arc along bottom -->
+  <!-- Beaded Dots Circle -->
   <g>
-    <circle cx="136.44" cy="398.48" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="141.90" cy="402.89" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="147.53" cy="407.09" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="153.30" cy="411.08" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="159.23" cy="414.84" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="165.29" cy="418.38" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="171.48" cy="421.69" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="177.79" cy="424.76" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="184.21" cy="427.59" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="190.74" cy="430.17" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="197.36" cy="432.51" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="204.06" cy="434.60" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="210.83" cy="436.43" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="217.67" cy="438.01" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="224.57" cy="439.32" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="231.50" cy="440.38" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="238.48" cy="441.17" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="245.48" cy="441.70" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="252.49" cy="441.97" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="259.51" cy="441.97" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="266.52" cy="441.70" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="273.52" cy="441.17" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="280.50" cy="440.38" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="287.43" cy="439.32" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="294.33" cy="438.01" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="301.17" cy="436.43" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="307.94" cy="434.60" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="314.64" cy="432.51" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="321.26" cy="430.17" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="327.79" cy="427.59" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="334.21" cy="424.76" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="340.52" cy="421.69" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="346.71" cy="418.38" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="352.77" cy="414.84" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="358.70" cy="411.08" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="364.47" cy="407.09" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="370.10" cy="402.89" r="1.8" fill="url(#goldGrad)" />
-    <circle cx="375.56" cy="398.48" r="1.8" fill="url(#goldGrad)" />
+    <circle cx="440.00" cy="256.00" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="439.11" cy="274.04" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="436.46" cy="291.90" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="432.08" cy="309.41" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="425.99" cy="326.41" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="418.27" cy="342.74" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="408.99" cy="358.22" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="398.23" cy="372.73" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="386.11" cy="386.11" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="372.73" cy="398.23" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="358.22" cy="408.99" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="342.74" cy="418.27" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="326.41" cy="425.99" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="309.41" cy="432.08" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="291.90" cy="436.46" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="274.04" cy="439.11" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="256.00" cy="440.00" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="237.96" cy="439.11" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="220.10" cy="436.46" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="202.59" cy="432.08" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="185.59" cy="425.99" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="169.26" cy="418.27" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="153.78" cy="408.99" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="139.27" cy="398.23" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="125.89" cy="386.11" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="113.77" cy="372.73" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="103.01" cy="358.22" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="93.73" cy="342.74" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="86.01" cy="326.41" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="79.92" cy="309.41" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="75.54" cy="291.90" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="72.89" cy="274.04" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="72.00" cy="256.00" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="72.89" cy="237.96" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="75.54" cy="220.10" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="79.92" cy="202.59" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="86.01" cy="185.59" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="93.73" cy="169.26" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="103.01" cy="153.78" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="113.77" cy="139.27" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="125.89" cy="125.89" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="139.27" cy="113.77" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="153.78" cy="103.01" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="169.26" cy="93.73" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="185.59" cy="86.01" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="202.59" cy="79.92" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="220.10" cy="75.54" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="237.96" cy="72.89" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="256.00" cy="72.00" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="274.04" cy="72.89" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="291.90" cy="75.54" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="309.41" cy="79.92" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="326.41" cy="86.01" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="342.74" cy="93.73" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="358.22" cy="103.01" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="372.73" cy="113.77" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="386.11" cy="125.89" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="398.23" cy="139.27" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="408.99" cy="153.78" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="418.27" cy="169.26" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="425.99" cy="185.59" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="432.08" cy="202.59" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="436.46" cy="220.10" r="1.75" fill="url(#goldGrad)" />
+    <circle cx="439.11" cy="237.96" r="1.75" fill="url(#goldGrad)" />
   </g>
 
-  <!-- TOP TEXT: ORCA in Classic Serif Typography -->
+  <!-- TOP TEXT: ORCA in Classic Serif Typography with Gold Gradient -->
   <text font-family="'Times New Roman', 'Playfair Display', Georgia, serif" font-weight="900" font-size="44" fill="url(#goldLight)" letter-spacing="14">
     <textPath href="#pathOrca" startOffset="50%" text-anchor="middle">ORCA</textPath>
   </text>
@@ -188,70 +212,70 @@
   <!-- CENTER EMBLEM: MARITIME ANCHOR -->
   <g fill="url(#goldGrad)" stroke="url(#goldGrad)" stroke-linejoin="round">
     <!-- Top Ring / Shackle -->
-    <circle cx="256" cy="180" r="16" fill="none" stroke="url(#goldLight)" stroke-width="5" />
-    <circle cx="256" cy="180" r="7.5" fill="#000000" />
+    <circle cx="256" cy="178" r="16" fill="none" stroke="url(#goldLight)" stroke-width="5" />
+    
 
     <!-- Horizontal Stock (Crossbar) with End Knobs -->
-    <rect x="214" y="200" width="84" height="6.5" rx="2" fill="url(#goldLight)" stroke="none" />
-    <circle cx="214" cy="203.25" r="5.5" fill="url(#goldLight)" stroke="none" />
-    <circle cx="298" cy="203.25" r="5.5" fill="url(#goldLight)" stroke="none" />
+    <rect x="214" y="198" width="84" height="6.5" rx="2" fill="url(#goldLight)" stroke="none" />
+    <circle cx="214" cy="201.25" r="5.5" fill="url(#goldLight)" stroke="none" />
+    <circle cx="298" cy="201.25" r="5.5" fill="url(#goldLight)" stroke="none" />
 
     <!-- Vertical Shank -->
-    <path d="M 252,206.5 L 252,284 L 260,284 L 260,206.5 Z" fill="url(#goldLight)" stroke="none" />
+    <path d="M 252,204.5 L 252,282 L 260,282 L 260,204.5 Z" fill="url(#goldLight)" stroke="none" />
 
     <!-- Curved Arms & Flukes -->
     <path d="
-      M 256,306
-      C 238,306 214,295 198,266
-      C 197,264 200,263 203,264
-      L 207,266
-      L 201,250
-      L 217,258
-      L 213,262
-      C 225,282 242,289 252,289
-      L 252,306
+      M 256,304
+      C 238,304 214,293 198,264
+      C 197,262 200,261 203,262
+      L 207,264
+      L 201,248
+      L 217,256
+      L 213,260
+      C 225,280 242,287 252,287
+      L 252,304
       Z"
       fill="url(#goldLight)" stroke="none" />
 
     <path d="
-      M 256,306
-      C 274,306 298,295 314,266
-      C 315,264 312,263 309,264
-      L 305,266
-      L 311,250
-      L 295,258
-      L 299,262
-      C 287,282 270,289 260,289
-      L 260,306
+      M 256,304
+      C 274,304 298,293 314,264
+      C 315,262 312,261 309,262
+      L 305,264
+      L 311,248
+      L 295,256
+      L 299,260
+      C 287,280 270,287 260,287
+      L 260,304
       Z"
       fill="url(#goldLight)" stroke="none" />
 
     <!-- Pointed Crown at Base -->
-    <polygon points="252,286 260,286 256,306" fill="url(#goldLight)" stroke="none" />
+    <polygon points="252,284 260,284 256,304" fill="url(#goldLight)" stroke="none" />
   </g>
 
   <!-- OCEAN WAVES (Beneath Anchor) -->
   <g fill="none" stroke="url(#goldLight)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
     <!-- Wave 1 (Top) -->
     <path d="
-      M 174,324
-      C 194,316 210,316 230,324
-      C 250,332 266,332 286,324
-      C 304,316 320,316 338,324" />
+      M 174,322
+      C 194,314 210,314 230,322
+      C 250,330 266,330 286,322
+      C 304,314 320,314 338,322" />
 
     <!-- Wave 2 (Middle) -->
     <path d="
-      M 174,342
-      C 194,334 210,334 230,342
-      C 250,350 266,350 286,342
-      C 304,334 320,334 338,342" />
+      M 174,340
+      C 194,332 210,332 230,340
+      C 250,348 266,348 286,340
+      C 304,332 320,332 338,340" />
 
     <!-- Wave 3 (Bottom) -->
     <path d="
-      M 174,360
-      C 194,352 210,352 230,360
-      C 250,368 266,368 286,360
-      C 304,352 320,352 338,360" />
+      M 174,358
+      C 194,350 210,350 230,358
+      C 250,366 266,366 286,358
+      C 304,350 320,350 338,358" />
   </g>
 
   <!-- BOTTOM MOTTO: SAFER SEAS • SMARTER DECISIONS -->

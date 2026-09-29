@@ -27,48 +27,56 @@ function buildLogoSvg({ transparent = false } = {}) {
     const x4 = cx + ropeInnerR * Math.cos(nextAngleRad - tilt);
     const y4 = cy + ropeInnerR * Math.sin(nextAngleRad - tilt);
 
-    // Alternate subtle shading on rope coils for realistic 3D twist
+    // Alternate subtle shading on rope coils for realistic 3D gold twist
     const shade = i % 2 === 0 ? 'url(#goldRopeLight)' : 'url(#goldRopeDark)';
     ropeElements.push(
       `<polygon points="${x1.toFixed(2)},${y1.toFixed(2)} ${x2.toFixed(2)},${y2.toFixed(2)} ${x3.toFixed(2)},${y3.toFixed(2)} ${x4.toFixed(2)},${y4.toFixed(2)}" fill="${shade}" />`
     );
   }
 
-  // Generate bottom beaded dots arc (lining the lower inner rim)
+  // Generate complete beaded dots circle around inner rim
   const dotElements = [];
-  const dotRadius = 186;
-  const numDots = 38;
-  const startDotAngle = (50 * Math.PI) / 180;
-  const endDotAngle = (130 * Math.PI) / 180;
+  const dotRadius = 184;
+  const numDots = 64;
 
   for (let i = 0; i < numDots; i++) {
-    const frac = i / (numDots - 1);
-    const a = startDotAngle + frac * (endDotAngle - startDotAngle);
-    // around bottom: x = cx + r*cos(a), y = cy + r*sin(a)
-    const dx = cx - dotRadius * Math.cos(a);
-    const dy = cy + dotRadius * Math.sin(a);
-    dotElements.push(`<circle cx="${dx.toFixed(2)}" cy="${dy.toFixed(2)}" r="1.8" fill="url(#goldGrad)" />`);
+    const angleRad = (i / numDots) * 2 * Math.PI;
+    const dx = cx + dotRadius * Math.cos(angleRad);
+    const dy = cy + dotRadius * Math.sin(angleRad);
+    dotElements.push(`<circle cx="${dx.toFixed(2)}" cy="${dy.toFixed(2)}" r="1.75" fill="url(#goldGrad)" />`);
   }
 
   const bgRect = transparent
     ? ''
-    : `<rect width="${size}" height="${size}" fill="#020202" />`;
+    : `<rect width="${size}" height="${size}" fill="#FFFFFF" />`;
+
+  const bgCircle = transparent
+    ? ''
+    : `<circle cx="${cx}" cy="${cy}" r="248" fill="#FFFFFF" />`;
+
+  const innerCircle = transparent
+    ? ''
+    : `<circle cx="${cx}" cy="${cy}" r="208" fill="#FFFFFF" />`;
+
+  const shackleHole = transparent
+    ? ''
+    : `<circle cx="256" cy="178" r="7.5" fill="#FFFFFF" />`;
 
   return `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">
   <defs>
-    <!-- Rich Maritime Gold Gradients -->
+    <!-- Rich Lustrous Maritime Gold Gradients matching uploaded asset -->
     <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#FCEBA0" />
       <stop offset="25%" stop-color="#E5C365" />
-      <stop offset="60%" stop-color="#C59B27" />
+      <stop offset="55%" stop-color="#C59B27" />
       <stop offset="85%" stop-color="#E2C269" />
-      <stop offset="100%" stop-color="#9E7616" />
+      <stop offset="100%" stop-color="#A57D18" />
     </linearGradient>
 
     <linearGradient id="goldLight" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FFF2B8" />
-      <stop offset="50%" stop-color="#E1BF62" />
+      <stop offset="0%" stop-color="#FCEBA0" />
+      <stop offset="40%" stop-color="#DFBD5D" />
       <stop offset="100%" stop-color="#B88A1B" />
     </linearGradient>
 
@@ -81,7 +89,7 @@ function buildLogoSvg({ transparent = false } = {}) {
     <linearGradient id="goldRopeDark" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#D6A730" />
       <stop offset="60%" stop-color="#A87B14" />
-      <stop offset="100%" stop-color="#735208" />
+      <stop offset="100%" stop-color="#7E5C0A" />
     </linearGradient>
 
     <!-- Curvature paths for upper and lower text -->
@@ -93,11 +101,9 @@ function buildLogoSvg({ transparent = false } = {}) {
   </defs>
 
   ${bgRect}
+  ${bgCircle}
 
-  <!-- Circular Outer Badge Base -->
-  <circle cx="${cx}" cy="${cy}" r="244" fill="#020202" />
-
-  <!-- Outer Gold Rope Ring -->
+  <!-- Outer Gold Rope Ring Border -->
   <circle cx="${cx}" cy="${cy}" r="${ropeOuterR}" fill="none" stroke="url(#goldGrad)" stroke-width="3" />
   <circle cx="${cx}" cy="${cy}" r="${ropeInnerR}" fill="none" stroke="url(#goldGrad)" stroke-width="2.5" />
 
@@ -106,18 +112,18 @@ function buildLogoSvg({ transparent = false } = {}) {
     ${ropeElements.join('\n    ')}
   </g>
 
-  <!-- Inner Badge Dark Field -->
-  <circle cx="${cx}" cy="${cy}" r="208" fill="#000000" />
+  <!-- Inner Badge Field -->
+  ${innerCircle}
 
   <!-- Concentric Inner Gold Hairline Ring -->
   <circle cx="${cx}" cy="${cy}" r="196" fill="none" stroke="url(#goldGrad)" stroke-width="2" />
 
-  <!-- Beaded Dots Arc along bottom -->
+  <!-- Beaded Dots Circle -->
   <g>
     ${dotElements.join('\n    ')}
   </g>
 
-  <!-- TOP TEXT: ORCA in Classic Serif Typography -->
+  <!-- TOP TEXT: ORCA in Classic Serif Typography with Gold Gradient -->
   <text font-family="'Times New Roman', 'Playfair Display', Georgia, serif" font-weight="900" font-size="44" fill="url(#goldLight)" letter-spacing="14">
     <textPath href="#pathOrca" startOffset="50%" text-anchor="middle">ORCA</textPath>
   </text>
@@ -125,70 +131,70 @@ function buildLogoSvg({ transparent = false } = {}) {
   <!-- CENTER EMBLEM: MARITIME ANCHOR -->
   <g fill="url(#goldGrad)" stroke="url(#goldGrad)" stroke-linejoin="round">
     <!-- Top Ring / Shackle -->
-    <circle cx="256" cy="180" r="16" fill="none" stroke="url(#goldLight)" stroke-width="5" />
-    <circle cx="256" cy="180" r="7.5" fill="#000000" />
+    <circle cx="256" cy="178" r="16" fill="none" stroke="url(#goldLight)" stroke-width="5" />
+    ${shackleHole}
 
     <!-- Horizontal Stock (Crossbar) with End Knobs -->
-    <rect x="214" y="200" width="84" height="6.5" rx="2" fill="url(#goldLight)" stroke="none" />
-    <circle cx="214" cy="203.25" r="5.5" fill="url(#goldLight)" stroke="none" />
-    <circle cx="298" cy="203.25" r="5.5" fill="url(#goldLight)" stroke="none" />
+    <rect x="214" y="198" width="84" height="6.5" rx="2" fill="url(#goldLight)" stroke="none" />
+    <circle cx="214" cy="201.25" r="5.5" fill="url(#goldLight)" stroke="none" />
+    <circle cx="298" cy="201.25" r="5.5" fill="url(#goldLight)" stroke="none" />
 
     <!-- Vertical Shank -->
-    <path d="M 252,206.5 L 252,284 L 260,284 L 260,206.5 Z" fill="url(#goldLight)" stroke="none" />
+    <path d="M 252,204.5 L 252,282 L 260,282 L 260,204.5 Z" fill="url(#goldLight)" stroke="none" />
 
     <!-- Curved Arms & Flukes -->
     <path d="
-      M 256,306
-      C 238,306 214,295 198,266
-      C 197,264 200,263 203,264
-      L 207,266
-      L 201,250
-      L 217,258
-      L 213,262
-      C 225,282 242,289 252,289
-      L 252,306
+      M 256,304
+      C 238,304 214,293 198,264
+      C 197,262 200,261 203,262
+      L 207,264
+      L 201,248
+      L 217,256
+      L 213,260
+      C 225,280 242,287 252,287
+      L 252,304
       Z"
       fill="url(#goldLight)" stroke="none" />
 
     <path d="
-      M 256,306
-      C 274,306 298,295 314,266
-      C 315,264 312,263 309,264
-      L 305,266
-      L 311,250
-      L 295,258
-      L 299,262
-      C 287,282 270,289 260,289
-      L 260,306
+      M 256,304
+      C 274,304 298,293 314,264
+      C 315,262 312,261 309,262
+      L 305,264
+      L 311,248
+      L 295,256
+      L 299,260
+      C 287,280 270,287 260,287
+      L 260,304
       Z"
       fill="url(#goldLight)" stroke="none" />
 
     <!-- Pointed Crown at Base -->
-    <polygon points="252,286 260,286 256,306" fill="url(#goldLight)" stroke="none" />
+    <polygon points="252,284 260,284 256,304" fill="url(#goldLight)" stroke="none" />
   </g>
 
   <!-- OCEAN WAVES (Beneath Anchor) -->
   <g fill="none" stroke="url(#goldLight)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
     <!-- Wave 1 (Top) -->
     <path d="
-      M 174,324
-      C 194,316 210,316 230,324
-      C 250,332 266,332 286,324
-      C 304,316 320,316 338,324" />
+      M 174,322
+      C 194,314 210,314 230,322
+      C 250,330 266,330 286,322
+      C 304,314 320,314 338,322" />
 
     <!-- Wave 2 (Middle) -->
     <path d="
-      M 174,342
-      C 194,334 210,334 230,342
-      C 250,350 266,350 286,342
-      C 304,334 320,334 338,342" />
+      M 174,340
+      C 194,332 210,332 230,340
+      C 250,348 266,348 286,340
+      C 304,332 320,332 338,340" />
 
     <!-- Wave 3 (Bottom) -->
     <path d="
-      M 174,360
-      C 194,352 210,352 230,360
-      C 250,368 266,368 286,360
-      C 304,352 320,352 338,360" />
+      M 174,358
+      C 194,350 210,350 230,358
+      C 250,366 266,366 286,358
+      C 304,350 320,350 338,358" />
   </g>
 
   <!-- BOTTOM MOTTO: SAFER SEAS • SMARTER DECISIONS -->
@@ -200,9 +206,10 @@ function buildLogoSvg({ transparent = false } = {}) {
 }
 
 async function generateAll() {
-  console.log('Generating official ORCA Brand Logo assets...');
+  console.log('Generating official ORCA Brand Logo assets with 100% seamless transparent background...');
 
-  const svgBlack = buildLogoSvg({ transparent: false });
+  // Always use 100% transparent background so application white background shows through seamlessly
+  // Zero rect, zero bounding box, zero off-white square
   const svgTransparent = buildLogoSvg({ transparent: true });
 
   const targetDirs = [
@@ -215,49 +222,34 @@ async function generateAll() {
     fs.mkdirSync(dir, { recursive: true });
   }
 
-  // 1. High-resolution 512x512 with official black background
-  await sharp(Buffer.from(svgBlack))
+  // 1. High-resolution 512x512 transparent PNGs
+  const buffer = await sharp(Buffer.from(svgTransparent))
     .png({ compressionLevel: 9 })
-    .toFile(path.resolve('src/assets/images/orca-logo.png'));
-  
-  await sharp(Buffer.from(svgBlack))
-    .png({ compressionLevel: 9 })
-    .toFile(path.resolve('public/orca-logo.png'));
-  
-  await sharp(Buffer.from(svgBlack))
-    .png({ compressionLevel: 9 })
-    .toFile(path.resolve('public/assets/images/orca-logo.png'));
+    .toBuffer();
 
-  // 2. High-resolution 512x512 with transparent background
-  await sharp(Buffer.from(svgTransparent))
-    .png({ compressionLevel: 9 })
-    .toFile(path.resolve('src/assets/images/orca-logo-transparent.png'));
+  fs.writeFileSync(path.resolve('src/assets/images/orca-logo.png'), buffer);
+  fs.writeFileSync(path.resolve('public/orca-logo.png'), buffer);
+  fs.writeFileSync(path.resolve('public/assets/images/orca-logo.png'), buffer);
 
-  await sharp(Buffer.from(svgTransparent))
-    .png({ compressionLevel: 9 })
-    .toFile(path.resolve('public/orca-logo-transparent.png'));
+  fs.writeFileSync(path.resolve('src/assets/images/orca-logo-transparent.png'), buffer);
+  fs.writeFileSync(path.resolve('public/orca-logo-transparent.png'), buffer);
+  fs.writeFileSync(path.resolve('public/assets/images/orca-logo-transparent.png'), buffer);
 
-  await sharp(Buffer.from(svgTransparent))
-    .png({ compressionLevel: 9 })
-    .toFile(path.resolve('public/assets/images/orca-logo-transparent.png'));
-
-  // 3. Compact 128x128 mobile icons
-  await sharp(Buffer.from(svgBlack))
+  // 2. Compact 128x128 mobile icons with transparent background
+  const iconBuffer = await sharp(Buffer.from(svgTransparent))
     .resize(128, 128)
     .png({ compressionLevel: 9 })
-    .toFile(path.resolve('public/orca-logo-128.png'));
+    .toBuffer();
 
-  await sharp(Buffer.from(svgTransparent))
-    .resize(128, 128)
-    .png({ compressionLevel: 9 })
-    .toFile(path.resolve('public/orca-logo-transparent-128.png'));
+  fs.writeFileSync(path.resolve('public/orca-logo-128.png'), iconBuffer);
+  fs.writeFileSync(path.resolve('public/orca-logo-transparent-128.png'), iconBuffer);
 
-  // Also save SVG sources
-  fs.writeFileSync(path.resolve('src/assets/images/orca-logo.svg'), svgBlack);
-  fs.writeFileSync(path.resolve('public/orca-logo.svg'), svgBlack);
+  // 3. SVG vector sources
+  fs.writeFileSync(path.resolve('src/assets/images/orca-logo.svg'), svgTransparent);
+  fs.writeFileSync(path.resolve('public/orca-logo.svg'), svgTransparent);
   fs.writeFileSync(path.resolve('src/assets/images/orca-logo-transparent.svg'), svgTransparent);
 
-  console.log('✓ All ORCA official brand assets successfully generated!');
+  console.log('✓ All ORCA official brand assets successfully generated with 100% transparent backgrounds!');
 }
 
 generateAll().catch((err) => {

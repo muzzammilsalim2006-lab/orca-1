@@ -16,7 +16,7 @@ import React from 'react';
  * @param {boolean} showTagline - Optional display of textual subtitle below
  */
 export default function OrcaLogo({
-  variant = 'original',
+  variant = 'transparent',
   size = 'md',
   className = '',
   showTagline = false,
@@ -32,17 +32,25 @@ export default function OrcaLogo({
   };
 
   const dimClass = sizeMap[size] || size;
-  const imageSrc = variant === 'transparent'
-    ? '/orca-logo-transparent.png'
-    : '/orca-logo.png';
+  // Always use the 100% transparent asset so application white background blends seamlessly
+  const imageSrc = variant === 'original' ? '/orca-logo.png' : '/orca-logo-transparent.png';
+
+  // Strip any shadow classes that might have been passed down from parent containers
+  // to ensure there is NO visible square, rectangle, border, or shadow surrounding the circular logo
+  const cleanClassName = (className || '')
+    .replace(/\bshadow-[^\s]+/g, '')
+    .replace(/\bshadow\b/g, '')
+    .replace(/\bdrop-shadow-[^\s]+/g, '')
+    .replace(/\bdrop-shadow\b/g, '')
+    .trim();
 
   return (
-    <div className={`inline-flex flex-col items-center justify-center ${className}`}>
+    <div className={`inline-flex flex-col items-center justify-center bg-transparent ${cleanClassName}`}>
       <img
         src={imageSrc}
         alt="ORCA Official Brand Logo"
         referrerPolicy="no-referrer"
-        className={`${dimClass} object-contain select-none shrink-0 drop-shadow-sm`}
+        className={`${dimClass} object-contain select-none shrink-0 bg-transparent`}
         loading="eager"
       />
       {showTagline && (
