@@ -120,32 +120,51 @@ graph TD
 ```mermaid
 graph TD
     subgraph EXP["L1 - EXPERIENCE (user screens)"]
-        chat[Chat UI]
-        voice[Voice Assistant]
-        dash[Command Dashboard + Map]
-        alert[Field Alerts: SMS / IVR / WhatsApp]
+        chat["Chat UI"]
+        voice["Voice Assistant"]
+        dash["Command Dashboard + Map"]
+        alert["Field Alerts: SMS / IVR / WhatsApp"]
     end
 
     subgraph INT["L2 - INTELLIGENCE (AI agents)"]
-        intent[Intent Agent] --> graph[Mission Graph] --> plan[Planner Agent]
-        plan --> disc[Discovery Agent]
-        plan --> eco[Ecosystem Agent]
-        plan --> haz[Hazard Agent]
-        plan --> ana[Analysis Agent]
-        plan --> sar[Search / Exposure Agent]
-        plan --> pol[Policy Agent]
+        intent["Intent Agent"]
+        mgraph["Mission Graph"]
+        plan["Planner Agent"]
+        disc["Discovery Agent"]
+        eco["Ecosystem Agent"]
+        haz["Hazard Agent"]
+        ana["Analysis Agent"]
+        sar["Search / Exposure Agent"]
+        pol["Policy Agent"]
+        intent --> mgraph --> plan
+        plan --> disc
+        plan --> eco
+        plan --> haz
+        plan --> ana
+        plan --> sar
+        plan --> pol
     end
 
     subgraph DATA["L3 - MARINE DATA (data fabric)"]
-        mos[ISRO MOSDAC adapter] --> cube[Ocean State Cube]
-        inc[INCOIS adapter] --> cube
-        imd[IMD adapter] --> cube
-        om[Open-Meteo live adapter] --> cube
-        cube --> fresh[Freshness + Cloud Check]
+        mos["ISRO MOSDAC adapter"]
+        inc["INCOIS adapter"]
+        imd["IMD adapter"]
+        om["Open-Meteo live adapter"]
+        cube["Ocean State Cube"]
+        fresh["Freshness and Cloud Check"]
+        mos --> cube
+        inc --> cube
+        imd --> cube
+        om --> cube
+        cube --> fresh
     end
 
-    subgraph TRUST["L4 - TRUST & SAFETY (fixed rules)"]
-        veto[Official Warning VETO] --> rules[Rule Engine] --> unc[Uncertainty Engine] --> evi[Evidence Graph]
+    subgraph TRUST["L4 - TRUST and SAFETY (fixed rules)"]
+        veto["Official Warning VETO"]
+        rules["Rule Engine"]
+        unc["Uncertainty Engine"]
+        evi["Evidence Graph"]
+        veto --> rules --> unc --> evi
     end
 
     chat --> intent
