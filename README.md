@@ -6,7 +6,7 @@
 
 ---
 
-## 📑 Table of Contents
+##  Table of Contents
 1. [What is ORCA?](#1-what-is-orca)
 2. [The Problem We Solve](#2-the-problem-we-solve)
 3. [How ORCA Works (Simple Steps)](#3-how-orca-works)
@@ -29,10 +29,10 @@
 
 ORCA is a web platform that reads **ocean data from space** (ISRO satellites), **ocean labs** (INCOIS) and **weather offices** (IMD), and turns it into **simple answers** like:
 
-- ✅ **SAFE TO GO**
-- ⚠️ **CAUTION**
-- ⛔ **DO NOT GO / RETURN TO PORT**
-- 🔍 **SEARCH HERE** (for missing boats)
+-  **SAFE TO GO**
+-  **CAUTION**
+-  **DO NOT GO / RETURN TO PORT**
+-  **SEARCH HERE** (for missing boats)
 
 Its core engine, **EcoDrift**, looks at the marine ecosystem (where fish zones are) to understand **where boats likely are**, and overlays storm/wave danger on top of it.
 
@@ -81,15 +81,15 @@ graph TD
 
 ## 4. Key Features
 
-- 🎙️ **Voice Assistant** — speak your question, hear the answer in your language (built for low-literacy users).
-- 🛰️ **Live Open-Meteo Marine data** — real waves, swell, currents, sea temperature.
-- 🧠 **EcoDrift Engine** — uses fish-zone (ecosystem) data to estimate where fleets are and where missing boats may drift.
-- 🛡️ **Deterministic Safety Veto** — official Orange/Red warnings automatically override AI.
-- 🌥️ **Uncertainty Engine** — detects cloud cover and old satellite data; shows "low confidence" instead of guessing.
-- 🗺️ **Interactive coastal map** — PFZ zones, warning corridors, search cones.
-- 🌐 **Multilingual** — English, Hindi, Marathi (auto-detect by region, e.g., Mumbai/Goa → Marathi).
-- 📴 **Degraded Mode** — works with cached/fallback data when APIs fail, and clearly says so.
-- 🧾 **Evidence Graph** — every answer shows its proof: source, timestamp, rule.
+-  **Voice Assistant** — speak your question, hear the answer in your language (built for low-literacy users).
+-  **Live Open-Meteo Marine data** — real waves, swell, currents, sea temperature.
+-  **EcoDrift Engine** — uses fish-zone (ecosystem) data to estimate where fleets are and where missing boats may drift.
+-  **Deterministic Safety Veto** — official Orange/Red warnings automatically override AI.
+-  **Uncertainty Engine** — detects cloud cover and old satellite data; shows "low confidence" instead of guessing.
+-  **Interactive coastal map** — PFZ zones, warning corridors, search cones.
+-  **Multilingual** — English, Hindi, Marathi (auto-detect by region, e.g., Mumbai/Goa → Marathi).
+-  **Degraded Mode** — works with cached/fallback data when APIs fail, and clearly says so.
+-  **Evidence Graph** — every answer shows its proof: source, timestamp, rule.
 
 ---
 
@@ -365,4 +365,4 @@ Returns: GeoJSON search polygon, widened automatically if data is old.
 
 ---
 
-**Built with 🌊 by Team Meg — Smart India Hackathon 2026**
+**Built by Team Meg — Smart India Hackathon 2026**
